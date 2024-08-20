@@ -7,14 +7,16 @@ const apiLink = "https://fakestoreapi.com/products";
 let elements;
 let productNames;
 let productData = [];
+let searchedData = [];
+let currentFilter = "All";
+let currentSort = "Default";
 //!=====  FUNCTIONS =====!\\
 async function getProducts() {
   const res = await fetch(apiLink);
   const data = await res.json();
   productData = data;
   displayCards(data);
-  filterProduct("All");
-  console.log(data);
+  filterAndSortProducts();
 }
 getProducts();
 
@@ -36,80 +38,46 @@ function displayCards(data) {
   productNames = document.querySelectorAll(".product-title");
 }
 
-// // function filterProduct(value) {
-// //   buttons.forEach((button) => {
-// //     if (value.toLowerCase() == button.innerText.toLowerCase()) {
-// //       button.classList.add("active");
-// //     } else {
-// //       button.classList.remove("active");
-// //     }
-// //     elements?.forEach((element) => {
-// //       if (value == "All") {
-// //         element.classList.remove("hidden");
-// //       } else {
-// //         if (element.classList.contains(value)) {
-// //           element.classList.remove("hidden");
-// //         } else {
-// //           element.classList.add("hidden");
-// //         }
-// //       }
-// //     });
-// //   });
-// // }
+function filterAndSortProducts() {
+  let filteredData = productData;
+  if (currentFilter !== "All") {
+    filteredData = productData.filter(
+      (product) =>
+        product.category.toLowerCase() === currentFilter.toLowerCase()
+    );
+  }
+  if (currentSort === "LowToHigh") {
+    filteredData.sort((a, b) => a.price - b.price);
+  } else if (currentSort === "HighToLow") {
+    filteredData.sort((a, b) => b.price - a.price);
+  } else if (currentSort === "Name") {
+    filteredData.sort((a, b) => a.title.localeCompare(b.title));
+  }
+  displayCards(filteredData);
+}
 
 function filterProduct(filter) {
-    let filteredData = [...productData];
-    buttons.forEach((button) => {
-      if (filter.toLowerCase() == button.innerText.toLowerCase()) {
-        button.classList.add("active");
-      } else {
-        button.classList.remove("active");
-      }
-    });
-    if (filter !== "All") {
-      filteredData = productData.filter((product) =>
-        product.category.toLowerCase() === filter.toLowerCase()
-      );
+  currentFilter = filter;
+  buttons.forEach((button) => {
+    if (filter.toLowerCase() == button.innerText.toLowerCase()) {
+      button.classList.add("active");
+    } else {
+      button.classList.remove("active");
     }
-    displayCards(filteredData);
-  }
+  });
+  filterAndSortProducts();
+}
 
 function sortProduct(order) {
-  let sortedData = [...productData];
-  if (order === "LowToHigh") {
-    sortedData.sort((a, b) => a.price - b.price);
-  } else if (order === "HighToLow") {
-    sortedData.sort((a, b) => b.price - a.price);
-  } else if (order === "Default") {
-    sortedData = [...productData];
-  } else if (order === "Name") {
-    sortedData.sort((a, b) => a.title.localeCompare(b.title));
-  }
-  displayCards(sortedData);
-  filterProduct("All");
+  currentSort = order;
+  filterAndSortProducts();
 }
 
 //!=====  EVENTS =====!\\
 searchBar.addEventListener("input", (e) => {
   let value = e.target.value;
-  productNames?.forEach((name, i) => {
-    if (name.innerText.toLowerCase().includes(value.toLowerCase())) {
-      elements[i].classList.remove("hidden");
-    } else {
-      elements[i].classList.add("hidden");
-    }
+  searchedData = productData.filter((product) => {
+    return product.title.toLowerCase().includes(value.toLowerCase());
   });
+  displayCards(searchedData);
 });
-
-//!=====  EVENTS =====!\\
-// searchBar.addEventListener("input", (e) => {
-//   const value = e.target.value.toLowerCase();
-//   elements.forEach((element) => {
-//     const title = element.querySelector(".product-title").innerText.toLowerCase();
-//     if (title.includes(value)) {
-//       element.classList.remove("hidden");
-//     } else {
-//       element.classList.add("hidden");
-//     }
-//   });
-// });
