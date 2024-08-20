@@ -1,0 +1,48 @@
+[
+    <p class="text-center product-Price">Price: 1</p>,
+    <p class="text-center product-Price">Price: 200</p>,
+    <p class="text-center product-Price">Price: 15</p>,
+    <p class="text-center product-Price">Price: 50</p>,
+    <p class="text-center product-Price">Price: 6</p>,
+    <p class="text-center product-Price">Price: 340</p>
+]
+
+
+productPrices = document.querySelectorAll(".product-Price")
+pricesArray = Array.from(productPrices)
+lowToHighArray = pricesArray.sort((a, b) => {
+    const priceA = parseFloat(a.textContent.replace('Price: ', ''));
+    const priceB = parseFloat(b.textContent.replace('Price: ', ''));
+    return priceA - priceB; 
+});
+highToLowArray = pricesArray.sort((a, b) => {
+    const priceA = parseFloat(a.textContent.replace('Price: ', ''));
+    const priceB = parseFloat(b.textContent.replace('Price: ', ''));
+    return priceA - priceB; 
+});
+
+
+
+function sortProduct(value) {
+    sortedButtons.forEach((button)=>{
+        // if (value.toLowerCase()== button.innerText.toLowerCase()) {
+        //     button.classList.add("active");
+        // }
+        // else{
+        //     button.classList.remove("active");
+        // }
+       elements?.forEach((element)=>{
+            // if (value=="All") {
+            //     element.classList.remove("hidden")
+            // }
+            // else{
+                if (element.classList.contains(value)) {
+                    element.classList.remove("hidden")
+                }
+                else{
+                    element.classList.add("hidden")
+                }
+            //}
+       })
+    })
+}

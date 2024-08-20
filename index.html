@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="container my-3">
+      <div class="wrapper">
+        <div class="row my-2">
+          <div class="col-md-10">
+            <div id="search-container ">
+              <input
+                type="text"
+                class="form-control search-bar"
+                placeholder="Search by name..."
+              />
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="dropdown w-100">
+              <button
+                class="btn btn-primary dropdown-toggle w-100"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Sorted by
+              </button>
+              <ul class="dropdown-menu sorted-buttons">
+                <li>
+                  <button
+                    class="dropdown-item"
+                    onclick="sortProduct('Default')"
+                  >
+                    Default
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    onclick="sortProduct('HighToLow')"
+                  >
+                    Price high to low
+                  </button>
+                </li>
+                <li>
+                  <button
+                    class="dropdown-item"
+                    onclick="sortProduct('LowToHigh')"
+                  >
+                    Price low to high
+                  </button>
+                </li>
+                <li>
+                  <button class="dropdown-item" onclick="sortProduct('Name')">
+                    Name
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="buttons d-flex justify-content-between w-75 mt-3 mx-auto">
+          <button
+            class="btn btn-outline-primary rounded-5"
+            onclick='filterProduct("All")'
+          >
+            All
+          </button>
+          <button
+            class="btn btn-outline-primary rounded-5"
+            onclick="filterProduct(`men's clothing`)"
+          >
+            men's clothing
+          </button>
+          <button
+            class="btn btn-outline-primary rounded-5"
+            onclick="filterProduct(`women's clothing`)"
+          >
+            women's clothing
+          </button>
+          <button
+            class="btn btn-outline-primary rounded-5"
+            onclick="filterProduct('jewelery')"
+          >
+            jewelery
+          </button>
+          <button
+            class="btn btn-outline-primary rounded-5"
+            onclick="filterProduct('electronics')"
+          >
+            electronics
+          </button>
+        </div>
+      </div>
+      <div class="row cards"></div>
+    </div>
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
